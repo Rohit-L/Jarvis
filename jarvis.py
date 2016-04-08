@@ -4,8 +4,6 @@ from utilities import *
 from weather import *
 import time
 
-ERROR = 256
-
 # For Speech Recognition
 recorder = sr.Recognizer()
 microphone = sr.Microphone()

@@ -4,6 +4,8 @@ import re
 import random
 import webbrowser
 
+ERROR = 256
+
 def speak(text):
     cmd = 'say -v "Samantha" "' + text + '"'
     print(cmd)
