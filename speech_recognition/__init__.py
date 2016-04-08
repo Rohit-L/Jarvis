@@ -24,6 +24,10 @@ class WaitTimeoutError(Exception): pass
 class RequestError(Exception): pass
 class UnknownValueError(Exception): pass
 
+import pyglet
+def play(file):
+    pyglet.resource.media(file).play()
+
 class AudioSource(object):
     def __init__(self):
         raise NotImplementedError("this is an abstract class")
@@ -490,7 +494,8 @@ class Recognizer(AudioSource):
 
             # check how long the detected phrase is, and retry listening if the phrase is too short
             phrase_count -= pause_count
-            if phrase_count >= phrase_buffer_count: break # phrase is long enough, stop listening
+            if phrase_count >= phrase_buffer_count:
+                break # phrase is long enough, stop listening
 
         # obtain frame data
         for i in range(pause_count - non_speaking_buffer_count): frames.pop() # remove extra non-speaking frames at the end
@@ -539,7 +544,7 @@ class Recognizer(AudioSource):
         """
         assert isinstance(audio_data, AudioData), "`audio_data` must be audio data"
         assert isinstance(language, str), "`language` must be a string"
-        
+
         # import the PocketSphinx speech recognition module
         try:
             from pocketsphinx import pocketsphinx
@@ -583,7 +588,7 @@ class Recognizer(AudioSource):
         if hypothesis is not None: return hypothesis.hypstr
         raise UnknownValueError() # no transcriptions available
 
-    def recognize_google(self, audio_data, key = None, language = "en-US", show_all = False):
+    def text(self, audio_data, key = None, language = "en-US", show_all = False):
         """
         Performs speech recognition on ``audio_data`` (an ``AudioData`` instance), using the Google Speech Recognition API.
 
